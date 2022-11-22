@@ -15,10 +15,17 @@ function imap(shortcut, command)
 end
 
 -- ------------------------- helper functions for keybindings -------------------------
+-- set leader as space
 vim.g.mapleader = ' '
 nmap('<leader>w', '<cmd>write<CR>')
 nmap('<leader>q', '<cmd>quit<CR>')
 imap('jk', '<Esc>')
+
+-- remap j and k to move across display lines and not real lines
+nmap('k', 'gk')
+nmap('gk', 'k')
+nmap('j', 'gj')
+nmap('gj', 'j')
 
 -- Git
 nmap('<leader>b', '<cmd>Git blame<CR>')
@@ -28,3 +35,8 @@ nmap("<leader>ff", "<cmd>lua require('telescope.builtin').find_files()<cr>")
 nmap("<leader>fg", "<cmd>lua require('telescope.builtin').live_grep()<cr>")
 nmap("<leader>fb", "<cmd>lua require('telescope.builtin').buffers()<cr>")
 nmap("<leader>fh", "<cmd>lua require('telescope.builtin').help_tags()<cr>")
+
+-- nvim tree
+nmap('<leader>t', '<cmd>NvimTreeFocus<CR>')
+nmap('<leader>tc', '<cmd>NvimTreeClose<CR>')
+nmap('<leader>tr', '<cmd>NvimTreeRefresh<CR>')

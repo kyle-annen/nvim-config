@@ -25,39 +25,40 @@ return require('packer').startup(function(use)
   -- function documentation or jump to a definition). Together with nvim-compe
   -- (autocompletion) I use them to replace Ale and coc.vim,
 
-  use 'wbthomason/packer.nvim' -- packer manages packer
-  use {
-    'windwp/nvim-autopairs',
-    config = function() require('nvim-autopairs').setup {} end
-  } -- bracket auto-pairing
-  use 'tpope/vim-fugitive' -- Git commands
-  use { 
-    'nvim-tree/nvim-web-devicons',
-    config = function() require('nvim-web-devicons').setup( { color_icons = true; }) end
+  -- packer manages packer
+  use 'wbthomason/packer.nvim'
 
-  } -- dev icons for nvim
+  -- bracket auto-pairing
+  use { 'windwp/nvim-autopairs', config = function() require('nvim-autopairs').setup {} end } 
 
+  -- Git commands
+  use 'tpope/vim-fugitive'
+
+  -- dev icons for nvim
+  use { 'nvim-tree/nvim-web-devicons', config = function() require('nvim-web-devicons').setup( { color_icons = true; }) end }
+
+  -- nvim tree for file tree
+  use { 'nvim-tree/nvim-tree.lua', tag = 'nightly', config = function() require('nvim-tree').setup() end }
+
+  -- use treesitter for highlighting, this could cause problems as it is in progress
   use {
     'nvim-treesitter/nvim-treesitter',
     run = function()
       local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
       ts_update()
     end
-  } -- use treesitter for highlighting, this could cause problems as it is in progress
+  } 
 
+  -- use instead of git gutter, this is not tested so I may revert to git gutters
+  use { 'lewis6991/gitsigns.nvim', config = function() require('gitsigns').setup() end } 
 
-  use { 'lewis6991/gitsigns.nvim',
-    config = function() require('gitsigns').setup() end
-  } -- use instead of git gutter, this is not tested so I may revert to git gutters
-
-  use {
-    'nvim-lualine/lualine.nvim',
-    requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+  -- lua lightline replacement, might want to go back to lightline if I don't like this
+  use { 'nvim-lualine/lualine.nvim', requires = { 'kyazdani42/nvim-web-devicons', opt = true },
     config = function ()
       require('lualine').setup();
-      require('evil_line_lua_line_config');
+      -- require('evil_line_lua_line_config');
     end
-  } -- lua lightline replacement, might want to go back to lightline if I don't like this
+  } 
 
   ------------------------ searching
   -- TODO: investigate different plugins for telescope: 
@@ -66,18 +67,12 @@ return require('packer').startup(function(use)
   -- sudo apt-get install ripgrep
   -- sudo apt-get install fd-find
   use 'nvim-lua/plenary.nvim'
-  use {
-    'nvim-telescope/telescope.nvim',
-    branch = '0.1.x',
-    config = function()
-      require('telescope').load_extension('fzf');
-    end
-  } -- use telescope for fuzzy finding
 
-  use {
-    'nvim-telescope/telescope-fzf-native.nvim', 
-    run = 'make'
-  } -- telescope sorter, native C impl of fzf 
+  -- use telescope for fuzzy finding
+  use { 'nvim-telescope/telescope.nvim', branch = '0.1.x', config = function() require('telescope').load_extension('fzf'); end }   
+
+  -- telescope sorter, native C impl of fzf 
+  use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' } 
 
   -- Automatically set up configuration after cloning packer.nvim
   -- Must be after all plugin declarations

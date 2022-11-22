@@ -4,4 +4,4 @@ require('auto-packer-compile') -- autocommand to run :PackerCompile on plugins.l
 
 ----------------------------------------- settings
 require('keybindings')
-require('text-settings')
+require('editor-settings')
