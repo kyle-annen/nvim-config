@@ -14,19 +14,27 @@ end
 local packer_bootstrap = ensure_packer()
 
 return require('packer').startup(function(use)
-
-  ------------------------ common
-  -- TODO: investigate nvim-lsp
-  -- https://neovim.io/doc/user/lsp.html
-  --
-  -- nvim-lspconfig together with nvim-lspinstall and lspsaga.nvim use the new,
-  -- built-in LSP in Neovim and provide some useful functions. Together they
-  -- allow me to easily install and use language servers (e.g. to display
-  -- function documentation or jump to a definition). Together with nvim-compe
-  -- (autocompletion) I use them to replace Ale and coc.vim,
-
   -- packer manages packer
   use 'wbthomason/packer.nvim'
+
+  ------------------------ common
+  -- lsp config for language server support
+  use 'neovim/nvim-lspconfig'
+
+  -- cmp framework for auto-completion support
+  use 'hrsh7th/nvim-cmp'
+
+  -- install different completion sources
+  use 'hrsh7th/cmp-nvim-lsp'
+  use 'hrsh7th/cmp-buffer'
+  use 'hrsh7th/cmp-path'
+  use 'hrsh7th/cmp-cmdline'
+
+  -- snippet engine for snippet support
+  use 'hrsh7th/vim-vsnip'
+  use 'hrsh7th/cmp-vsnip'
+
+
 
   -- bracket auto-pairing
   use { 'windwp/nvim-autopairs', config = function() require('nvim-autopairs').setup {} end } 

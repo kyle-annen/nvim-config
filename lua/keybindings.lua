@@ -27,6 +27,10 @@ nmap('gk', 'k')
 nmap('j', 'gj')
 nmap('gj', 'j')
 
+-- copy and paste with ctrl-{c,v}
+nmap('<c-c>', '"*y :let @+=@*<CR>')
+nmap('<c-v>', '"+p')
+
 -- Git
 nmap('<leader>b', '<cmd>Git blame<CR>')
 

@@ -5,3 +5,6 @@ require('auto-packer-compile') -- autocommand to run :PackerCompile on plugins.l
 ----------------------------------------- settings
 require('keybindings')
 require('editor-settings')
+
+----------------------------------------- language servers
+require('lsp-configs')
