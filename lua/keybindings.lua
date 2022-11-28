@@ -19,7 +19,8 @@ end
 vim.g.mapleader = ' '
 nmap('<leader>w', '<cmd>write<CR>')
 nmap('<leader>q', '<cmd>quit<CR>')
-imap('jk', '<Esc>')
+-- jk to exit and save
+imap('jk', '<Esc>:w<CR>')
 
 -- remap j and k to move across display lines and not real lines
 nmap('k', 'gk')
@@ -28,8 +29,8 @@ nmap('j', 'gj')
 nmap('gj', 'j')
 
 -- copy and paste with ctrl-{c,v}
-nmap('<c-c>', '"*y :let @+=@*<CR>')
-nmap('<c-v>', '"+p')
+imap('<c-c>', '"*y :let @+=@*<CR>')
+imap('<c-v>', '"+p')
 
 -- Git
 nmap('<leader>b', '<cmd>Git blame<CR>')
@@ -41,6 +42,13 @@ nmap("<leader>fb", "<cmd>lua require('telescope.builtin').buffers()<cr>")
 nmap("<leader>fh", "<cmd>lua require('telescope.builtin').help_tags()<cr>")
 
 -- nvim tree
-nmap('<leader>t', '<cmd>NvimTreeFocus<CR>')
+nmap('<leader>tt', '<cmd>NvimTreeFocus<CR>')
 nmap('<leader>tc', '<cmd>NvimTreeClose<CR>')
 nmap('<leader>tr', '<cmd>NvimTreeRefresh<CR>')
+
+-- rest-nvim
+nmap('<leader>rr', '<Plug>RestNvim<CR>')
+nmap('<leader>rp', '<Plug>RestNvimPreview<CR>')
+nmap('<leader>rl', '<Plug>RestNvimLast<CR>')
+
+
