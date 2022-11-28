@@ -20,10 +20,8 @@ end
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
--- nvim-cmp configuration
+--- nvim-cmp configuration
 local cmp = require'cmp'
--- used to add icons to codeactions
-local lspkind = require('lspkind')
 
 cmp.setup({
   snippet = {
@@ -41,18 +39,7 @@ cmp.setup({
     { name = 'nvim_lsp' },
     { name = 'vsnip' }, -- For vsnip users.
     { name = 'buffer' }
-  }),
-  formatting = {
-    format = lspkind.cmp_format({
-      mode = 'symbol',
-      maxwidth = 50,
-      ellipsis_char = '...',
-    }),
-    -- called before any modifications, popup customizaiton can happen here
-    before = function (entry, vim_item)
-      return vim_item
-    end
-  }
+  })
 })
 
 --- nvim-cmp use tab to cycle auto completion
@@ -95,6 +82,9 @@ require'nvim-treesitter.configs'.setup {
     disable = { },
   },
 }
+
+-- JABS buffer switcher configurations
+require('jabs').setup {}
 
 -- language server configurations
 require('lspconfig').tsserver.setup {

@@ -43,7 +43,8 @@ return require('packer').startup(function(use)
   -- Git commands
   use 'tpope/vim-fugitive'
 
-
+  -- General commenting plugin
+  use 'gennaro-tedesco/nvim-commaround'
 
   ------------------------ UI
   -- lsp config for language server support
@@ -75,6 +76,22 @@ return require('packer').startup(function(use)
     config = function() require('gitsigns').setup() end
   }
 
+  -- [<leader>?] add cheatsheet
+  use {
+    'sudormrfbin/cheatsheet.nvim',
+    requires = {
+      {'nvim-telescope/telescope.nvim'},
+      {'nvim-lua/popup.nvim'},
+      {'nvim-lua/plenary.nvim'}
+    }
+  }
+
+  -- use JABS for buffer switching
+  use {
+    'matbme/JABS.nvim',
+    requires = {'nvim-tree/nvim-web-devicons'}
+  }
+
   -- adds vscode style lightbulb for code actions
   use {
     'kosayoda/nvim-lightbulb',
@@ -84,6 +101,20 @@ return require('packer').startup(function(use)
 
   -- adds icons to codeactions
   use 'onsails/lspkind.nvim'
+
+  -- add function signatures to popup on hover
+  use {
+    'ray-x/lsp_signature.nvim',
+    config = function() require('lsp_signature').setup({}) end
+  }
+
+  -- wildmenu additions
+  use {
+    'gelguy/wilder.nvim',
+    config = function()
+      require('wilder').setup({ modes = {':', '/', '?'} })
+    end
+  }
 
   -- lua lightline replacement, might want to go back to lightline if I don't like this
   use {

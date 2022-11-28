@@ -14,7 +14,11 @@ function imap(shortcut, command)
   map('i', shortcut, command)
 end
 
--- ------------------------- helper functions for keybindings -------------------------
+function vmap(shortcut, command)
+  map('i', shortcut, command)
+end
+
+-- ------------------------- keybindings ----------------------------------------------
 -- set leader as space
 vim.g.mapleader = ' '
 nmap('<leader>w', '<cmd>write<CR>')
@@ -28,12 +32,15 @@ nmap('gk', 'k')
 nmap('j', 'gj')
 nmap('gj', 'j')
 
+-- one comment command to rule them all
+vmap('<leader>c', '<Plug>ToggleCommaround<CR>')
+
+-- opens JABS buffer picker
+nmap('<leader>b', '<cmd>JABSOpen<CR>')
+
 -- copy and paste with ctrl-{c,v}
 imap('<c-c>', '"*y :let @+=@*<CR>')
 imap('<c-v>', '"+p')
-
--- Git
-nmap('<leader>b', '<cmd>Git blame<CR>')
 
 -- telescope
 nmap("<leader>ff", "<cmd>lua require('telescope.builtin').find_files()<cr>")
@@ -50,5 +57,3 @@ nmap('<leader>tr', '<cmd>NvimTreeRefresh<CR>')
 nmap('<leader>rr', '<Plug>RestNvim<CR>')
 nmap('<leader>rp', '<Plug>RestNvimPreview<CR>')
 nmap('<leader>rl', '<Plug>RestNvimLast<CR>')
-
-
