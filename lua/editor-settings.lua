@@ -6,8 +6,12 @@ vim.wo.number = true
 
 -- maintain undo history between sessions
 vim.cmd([[
-set undofile
+  set undofile
 ]])
+
+-- set 24-bit color, needed by nvim-notify
+-- vim.opt.termguicolors = true
+vim.notify = require('notify')
 
 
 -------------------------------------- Editing

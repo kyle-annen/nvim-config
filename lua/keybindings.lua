@@ -14,8 +14,9 @@ function imap(shortcut, command)
   map('i', shortcut, command)
 end
 
+-- keymap in visual mode
 function vmap(shortcut, command)
-  map('i', shortcut, command)
+  map('v', shortcut, command)
 end
 
 -- ------------------------- keybindings ----------------------------------------------
@@ -23,8 +24,13 @@ end
 vim.g.mapleader = ' '
 nmap('<leader>w', '<cmd>write<CR>')
 nmap('<leader>q', '<cmd>quit<CR>')
+
 -- jk to exit and save
 imap('jk', '<Esc>:w<CR>')
+-- Esc to exit and save
+imap('<Esc>', '<Esc>:w<CR>')
+-- x deletes and saves in normal mode
+nmap('x', 'x:w<CR>')
 
 -- remap j and k to move across display lines and not real lines
 nmap('k', 'gk')

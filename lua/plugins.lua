@@ -46,6 +46,14 @@ return require('packer').startup(function(use)
   -- General commenting plugin
   use 'gennaro-tedesco/nvim-commaround'
 
+  -- [<leader>i] nvim-toggler to toggle word cardnality
+  use {
+    'nguyenvukhang/nvim-toggler',
+    config = function()
+      require('nvim-toggler').setup()
+    end
+  }
+
   ------------------------ UI
   -- lsp config for language server support
   -- dev icons for nvim
@@ -86,18 +94,37 @@ return require('packer').startup(function(use)
     }
   }
 
-  -- use JABS for buffer switching
+  -- [<leader>b] use JABS for buffer switching
   use {
     'matbme/JABS.nvim',
     requires = {'nvim-tree/nvim-web-devicons'}
   }
 
-  -- adds vscode style lightbulb for code actions
+  -- add biscuits, ghost snippet text to show opposite bracket
+  use {
+    'code-biscuits/nvim-biscuits',
+    config = function()
+      require('nvim-biscuits').setup({
+        default_config = {
+          max_length = 12,
+          min_distance = 5,
+          prefix_string = ' 📎 '
+        }
+      })
+    end
+  }
+
+  -- show a vscode like lightbulb next to code actions
   use {
     'kosayoda/nvim-lightbulb',
     requires = 'antoinemadec/FixCursorHold.nvim',
-    config = function() require('nvim-lightbulb').setup({ autocmd = { enabled = true }}) end,
+    config = function()
+      require('nvim-lightbulb').setup({ autocmd = { enabled = true }})
+    end,
   }
+
+  -- use nvim-notify for notifications
+  use { 'rcarriga/nvim-notify' }
 
   -- adds icons to codeactions
   use 'onsails/lspkind.nvim'
@@ -108,7 +135,20 @@ return require('packer').startup(function(use)
     config = function() require('lsp_signature').setup({}) end
   }
 
-  -- wildmenu additions
+  -- toggleterm for terminal
+  use {
+    'akinsho/toggleterm.nvim',
+    tag = '*',
+    config = function()
+      require('toggleterm').setup({
+        open_mapping = [[<leader>t]]
+      })
+    end
+  }
+
+
+  -- wildmenu (bottom menu) additions
+  -- this could use further tweaking
   use {
     'gelguy/wilder.nvim',
     config = function()
@@ -117,6 +157,7 @@ return require('packer').startup(function(use)
   }
 
   -- lua lightline replacement, might want to go back to lightline if I don't like this
+  -- this could use further tweaking
   use {
     'nvim-lualine/lualine.nvim',
     requires = { 'kyazdani42/nvim-web-devicons', opt = true },
@@ -127,18 +168,16 @@ return require('packer').startup(function(use)
   }
 
   ------------------------ searching
-  -- TODO: investigate different plugins for telescope:
-  -- https://github.com/nvim-telescope/telescope.nvim/wiki/Extensions#different-plugins-with-telescope-integration
-  -- TODO: add optional telescope deps to linux packages
-  -- sudo apt-get install ripgrep
-  -- sudo apt-get install fd-find
+  -- dependency for most things, provides better lua abstractions
   use 'nvim-lua/plenary.nvim'
 
   -- use telescope for fuzzy finding
   use {
     'nvim-telescope/telescope.nvim',
     branch = '0.1.x',
-    config = function() require('telescope').load_extension('fzf'); end
+    config = function()
+      require('telescope').load_extension('fzf');
+    end
   }
 
   -- telescope sorter, native C impl of fzf
