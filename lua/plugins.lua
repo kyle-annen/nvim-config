@@ -1,5 +1,3 @@
--- function to boot strap packer on a new machine
--- TODO: This should be extracted to another lua file
 local ensure_packer = function()
   local fn = vim.fn
   local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
@@ -18,8 +16,47 @@ return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
   ------------------------ common
-  -- lsp config for language server support
+  -- lsp-config for language server support
+  -- mason for LSP downloading
+  -- mason-lspconfig to link the other two
+  use {
+    'williamboman/mason.nvim',
+    config = function()
+      require('mason').setup()
+    end
+  }
+
+  use {
+    'williamboman/mason-lspconfig.nvim',
+    config = function()
+      -- order dependent loading
+      require('mason-lspconfig').setup({
+        -- list of servers to install automatically if not installed
+        ensure_installed = {
+          'sumneko_lua',
+        },
+        -- servers setup by lspconfig are installed automatically
+        automatic_installation = true
+      })
+    end
+  }
+
   use 'neovim/nvim-lspconfig'
+
+  -- use nvim-dap for language agnostic debugging (via LSP)
+  -- TODO map the keybindings maybe after full mason setup
+  -- https://github.com/mfussenegger/nvim-dap#usage
+  use 'mfussenegger/nvim-dap'
+  -- UI for nvim-dap
+  -- TODO: setup the keybindings
+  use {
+    "rcarriga/nvim-dap-ui",
+    require = { "mfussenegger/nvim-dap" },
+    config = function() require('dapui').setup() end
+  }
+
+  -- prevent nested nvim
+  use "samjwill/nvim-unception"
 
   -- cmp framework for auto-completion support
   use 'hrsh7th/nvim-cmp'
@@ -84,6 +121,28 @@ return require('packer').startup(function(use)
     config = function() require('gitsigns').setup() end
   }
 
+  -- use nvim-scrollbar to add a scroll bar
+  use {
+    'petertriho/nvim-scrollbar',
+    config = function()
+      require('scrollbar').setup()
+    end
+  }
+
+  -- use codewindow to get vscode like preview
+  use {
+    'gorbit99/codewindow.nvim',
+    config = function()
+      local codewindow = require('codewindow')
+      codewindow.setup()
+      codewindow.apply_default_keybinds()
+    end
+  }
+
+  -- use nvim-ts-rainbow for rainbow brackets
+  use { 'p00f/nvim-ts-rainbow' }
+
+
   -- [<leader>?] add cheatsheet
   use {
     'sudormrfbin/cheatsheet.nvim',
@@ -93,6 +152,7 @@ return require('packer').startup(function(use)
       {'nvim-lua/plenary.nvim'}
     }
   }
+
 
   -- [<leader>b] use JABS for buffer switching
   use {
@@ -135,17 +195,22 @@ return require('packer').startup(function(use)
     config = function() require('lsp_signature').setup({}) end
   }
 
-  -- toggleterm for terminal
+  -- smooth scrolling
+  use {
+    'gen740/SmoothCursor.nvim',
+    config = function()
+      require('smoothcursor').setup()
+    end
+  }
+
+  -- [<leader>t] toggleterm for terminal
   use {
     'akinsho/toggleterm.nvim',
     tag = '*',
     config = function()
-      require('toggleterm').setup({
-        open_mapping = [[<leader>t]]
-      })
+      require('toggleterm').setup()
     end
   }
-
 
   -- wildmenu (bottom menu) additions
   -- this could use further tweaking
