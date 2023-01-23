@@ -22,38 +22,37 @@ return require('packer').startup(function(use)
   use {
     'williamboman/mason.nvim',
     config = function()
-      require('mason').setup()
-    end
-  }
-
-  use {
-    'williamboman/mason-lspconfig.nvim',
-    config = function()
       -- order dependent loading
-      require('mason-lspconfig').setup({
-        -- list of servers to install automatically if not installed
+      require('mason').setup({
+        ui = {
+          icons = {
+            package_installed = "✓",
+            package_pending = "➜",
+            package_uninstalled = "✗"
+          }
+        }
+      })
+      require('mason-lspconfig').setup {
         ensure_installed = {
           'sumneko_lua',
+          'bashls',
+          'cssls',
+          'dockerls',
+          'eslint',
+          'elixirls',
+          'tsserver',
+          'jsonnet_ls',
+          'marksman',
+          'terraformls'
         },
-        -- servers setup by lspconfig are installed automatically
         automatic_installation = true
-      })
+      }
     end
   }
 
-  use 'neovim/nvim-lspconfig'
-
   -- use nvim-dap for language agnostic debugging (via LSP)
-  -- TODO map the keybindings maybe after full mason setup
   -- https://github.com/mfussenegger/nvim-dap#usage
   use 'mfussenegger/nvim-dap'
-  -- UI for nvim-dap
-  -- TODO: setup the keybindings
-  use {
-    "rcarriga/nvim-dap-ui",
-    require = { "mfussenegger/nvim-dap" },
-    config = function() require('dapui').setup() end
-  }
 
   -- prevent nested nvim
   use "samjwill/nvim-unception"
@@ -96,7 +95,9 @@ return require('packer').startup(function(use)
   -- dev icons for nvim
   use {
     'nvim-tree/nvim-web-devicons',
-    config = function() require('nvim-web-devicons').setup( { color_icons = true; }) end
+    config = function()
+      require('nvim-web-devicons').setup( { color_icons = true; })
+    end
   }
 
   -- nvim tree for file tree
@@ -141,6 +142,14 @@ return require('packer').startup(function(use)
 
   -- use nvim-ts-rainbow for rainbow brackets
   use { 'p00f/nvim-ts-rainbow' }
+
+  -- use nvim-ts-autotag for bracket and html tag completion
+  use {
+    'windwp/nvim-ts-autotag',
+    config = function()
+      require('nvim-ts-autotag').setup()
+    end
+  }
 
 
   -- [<leader>?] add cheatsheet
