@@ -49,10 +49,10 @@ imap('<c-c>', '"*y :let @+=@*<CR>')
 imap('<c-v>', '"+p')
 
 -- telescope
-nmap("<leader>ff", "<cmd>lua require('telescope.builtin').find_files()<cr>")
-nmap("<leader>fg", "<cmd>lua require('telescope.builtin').live_grep()<cr>")
-nmap("<leader>fb", "<cmd>lua require('telescope.builtin').buffers()<cr>")
-nmap("<leader>fh", "<cmd>lua require('telescope.builtin').help_tags()<cr>")
+nmap("<leader>ff", "<cmd>lua require('telescope.builtin').find_files()<CR>")
+nmap("<leader>fg", "<cmd>lua require('telescope.builtin').live_grep()<CR>")
+nmap("<leader>fb", "<cmd>lua require('telescope.builtin').buffers()<CR>")
+nmap("<leader>fh", "<cmd>lua require('telescope.builtin').help_tags()<CR>")
 
 -- nvim tree
 nmap('<leader>tt', '<cmd>NvimTreeFocus<CR>')
@@ -63,3 +63,6 @@ nmap('<leader>tr', '<cmd>NvimTreeRefresh<CR>')
 nmap('<leader>rr', '<Plug>RestNvim<CR>')
 nmap('<leader>rp', '<Plug>RestNvimPreview<CR>')
 nmap('<leader>rl', '<Plug>RestNvimLast<CR>')
+
+-- toggle-term
+nmap('<leader>t', '<cmd>ToggleTerm size=20 dir=git_dir direction=horizontal<CR>')

@@ -7,5 +7,5 @@ require('keybindings')
 require('editor-settings')
 
 ----------------------------------------- language servers
-require('lsp-configs')
+-- require('lsp-configs')
 require('lsp-format-on-save-autocommand') -- autocommand to format on save

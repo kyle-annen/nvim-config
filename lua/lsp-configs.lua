@@ -85,14 +85,3 @@ require'nvim-treesitter.configs'.setup {
 
 -- JABS buffer switcher configurations
 require('jabs').setup {}
-
--- language server configurations
-require('lspconfig').tsserver.setup {
-  on_attach = on_attach,
-  flags = lsp_flags,
-}
-require('lspconfig').elixirls.setup {
-  cmd = { "/home/k/.config/nvim/language-servers/elixir-ls/language_server.sh" },
-  on_attach = on_attach,
-  capabilities = capabilities
-}
