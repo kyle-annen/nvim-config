@@ -1,8 +1,8 @@
 local ensure_packer = function()
   local fn = vim.fn
-  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+  local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
   if fn.empty(fn.glob(install_path)) > 0 then
-    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+    fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
     vim.cmd [[packadd packer.nvim]]
     return true
   end
@@ -21,6 +21,9 @@ return require('packer').startup(function(use)
   -- mason-lspconfig to link the other two
   use {
     'williamboman/mason.nvim',
+    requires = {
+      { 'williamboman/mason-lspconfig.nvim'},
+    },
     config = function()
       -- order dependent loading
       require('mason').setup({
@@ -34,7 +37,7 @@ return require('packer').startup(function(use)
       })
       require('mason-lspconfig').setup {
         ensure_installed = {
-          'sumneko_lua',
+          'lua_ls',
           'bashls',
           'cssls',
           'dockerls',
@@ -44,7 +47,7 @@ return require('packer').startup(function(use)
           'jsonnet_ls',
           'marksman',
           'terraformls'
-        },
+       },
         automatic_installation = true
       }
     end
@@ -96,7 +99,7 @@ return require('packer').startup(function(use)
   use {
     'nvim-tree/nvim-web-devicons',
     config = function()
-      require('nvim-web-devicons').setup( { color_icons = true; })
+      require('nvim-web-devicons').setup({ color_icons = true, })
     end
   }
 
@@ -156,9 +159,9 @@ return require('packer').startup(function(use)
   use {
     'sudormrfbin/cheatsheet.nvim',
     requires = {
-      {'nvim-telescope/telescope.nvim'},
-      {'nvim-lua/popup.nvim'},
-      {'nvim-lua/plenary.nvim'}
+      { 'nvim-telescope/telescope.nvim' },
+      { 'nvim-lua/popup.nvim' },
+      { 'nvim-lua/plenary.nvim' }
     }
   }
 
@@ -166,7 +169,7 @@ return require('packer').startup(function(use)
   -- [<leader>b] use JABS for buffer switching
   use {
     'matbme/JABS.nvim',
-    requires = {'nvim-tree/nvim-web-devicons'}
+    requires = { 'nvim-tree/nvim-web-devicons' }
   }
 
   -- add biscuits, ghost snippet text to show opposite bracket
@@ -188,7 +191,7 @@ return require('packer').startup(function(use)
     'kosayoda/nvim-lightbulb',
     requires = 'antoinemadec/FixCursorHold.nvim',
     config = function()
-      require('nvim-lightbulb').setup({ autocmd = { enabled = true }})
+      require('nvim-lightbulb').setup({ autocmd = { enabled = true } })
     end,
   }
 
@@ -226,7 +229,7 @@ return require('packer').startup(function(use)
   use {
     'gelguy/wilder.nvim',
     config = function()
-      require('wilder').setup({ modes = {':', '/', '?'} })
+      require('wilder').setup({ modes = { ':', '/', '?' } })
     end
   }
 
@@ -235,7 +238,7 @@ return require('packer').startup(function(use)
   use {
     'nvim-lualine/lualine.nvim',
     requires = { 'kyazdani42/nvim-web-devicons', opt = true },
-    config = function ()
+    config = function()
       require('lualine').setup();
       require('evil_line_lua_line_config');
     end
@@ -289,7 +292,7 @@ return require('packer').startup(function(use)
           formatters = {
             json = "jq",
             html = function(body)
-              return vim.fn.system({"tidy", "-i", "-q", "-"}, body)
+              return vim.fn.system({ "tidy", "-i", "-q", "-" }, body)
             end
           },
         },
