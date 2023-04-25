@@ -1,21 +1,21 @@
 -- ------------------------- helper functions for keybindings -------------------------
 
-function map(mode, shortcut, command)
+local function map(mode, shortcut, command)
   vim.api.nvim_set_keymap(mode, shortcut, command, { noremap = true, silent = true })
 end
 
 -- keymap in normal mode
-function nmap(shortcut, command)
+local function nmap(shortcut, command)
   map('n', shortcut, command)
 end
 
 -- keymap in interactive mode
-function imap(shortcut, command)
+local function imap(shortcut, command)
   map('i', shortcut, command)
 end
 
 -- keymap in visual mode
-function vmap(shortcut, command)
+local function vmap(shortcut, command)
   map('v', shortcut, command)
 end
 

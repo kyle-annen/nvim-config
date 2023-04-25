@@ -21,12 +21,16 @@ return require('packer').startup(function(use)
   -- mason-lspconfig to link the other two
   use {
     'williamboman/mason.nvim',
+    run = ":MasonUpdate",
     requires = {
       { 'williamboman/mason-lspconfig.nvim' },
       { 'neovim/nvim-lspconfig' },
     },
     config = function()
       -- order dependent loading
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      capabilities.textDocument.completion.completionItem.snippetSupport = true
+
       require('mason').setup({
         ui = {
           icons = {
@@ -36,14 +40,23 @@ return require('packer').startup(function(use)
           }
         }
       })
-      require("mason-lspconfig").setup_handlers {
+      require("mason-lspconfig").setup_handlers({
         -- The first entry (without a key) will be the default handler
         -- and will be called for each installed server that doesn't have
         -- a dedicated handler.
         function(server_name) -- default handler (optional)
-          require("lspconfig")[server_name].setup {}
+          require("lspconfig")[server_name].setup {
+            capabilities = capabilities
+          }
+        end,
+        -- this may be needed
+        ["elixirls"] = function()
+          require("lspconfig").elixirls.setup {
+            cmd = { "elixir-ls" },
+            capabilities = capabilities
+          }
         end
-      }
+      })
     end
   }
 
