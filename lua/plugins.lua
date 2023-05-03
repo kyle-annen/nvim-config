@@ -161,6 +161,8 @@ return require('packer').startup(function(use)
     end
   }
 
+  -- Automatic end insertion for Ruby/elixir
+  use { 'tpope/vim-endwise' }
 
   -- [<leader>?] add cheatsheet
   use {
@@ -185,7 +187,7 @@ return require('packer').startup(function(use)
     config = function()
       require('nvim-biscuits').setup({
         default_config = {
-          max_length = 12,
+          max_length = 8,
           min_distance = 5,
           prefix_string = ' 📎 '
         }

@@ -2,7 +2,7 @@
 -- instance has been attached to an open buffer with matching filetype
 -- set key mappings for hover documentation, goto definitions, goto references, etc
 local on_attach = function(client, bufnr)
-  local opts = { noremap=true, silent=true }
+  local opts = { noremap = true, silent = true }
 
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
@@ -21,7 +21,7 @@ end
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 --- nvim-cmp configuration
-local cmp = require'cmp'
+local cmp = require 'cmp'
 
 cmp.setup({
   snippet = {
@@ -47,6 +47,11 @@ local feedkey = function(key, mode)
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
 end
 
+local has_words_before = function()
+  local cursor = vim.api.nvim_win_get_cursor(0)
+  return (vim.api.nvim_buf_get_lines(0, cursor[1] - 1, cursor[1], true)[1] or ''):sub(cursor[2], cursor[2]):match('%s')
+end
+
 cmp.setup({
   -- other settings ...
   mapping = {
@@ -64,22 +69,22 @@ cmp.setup({
     end, { "i", "s" }),
     ["<S-Tab>"] = cmp.mapping(function()
       if cmp.visible() then
-	      cmp.select_prev_item()
+        cmp.select_prev_item()
       elseif vim.fn["vsnip#jumpable"](-1) == 1 then
-	      feedkey("<Plug>(vsnip-jump-prev)", "")
+        feedkey("<Plug>(vsnip-jump-prev)", "")
       end
     end, { "i", "s" })
   }
 })
 
 -- tree sitter config
-require'nvim-treesitter.configs'.setup {
+require 'nvim-treesitter.configs'.setup {
   ensure_installed = "all",
   sync_install = false,
-  ignore_install = { },
+  ignore_install = {},
   highlight = {
     enable = true,
-    disable = { },
+    disable = {},
   },
 }
 
