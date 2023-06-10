@@ -1,21 +1,22 @@
--- ------------------------- helper functions for keybindings -------------------------
+-- ------------------------- helper functions for keybindings ------------------------
+local vim = vim
 
-function map(mode, shortcut, command)
+local function map(mode, shortcut, command)
   vim.api.nvim_set_keymap(mode, shortcut, command, { noremap = true, silent = true })
 end
 
 -- keymap in normal mode
-function nmap(shortcut, command)
+local function nmap(shortcut, command)
   map('n', shortcut, command)
 end
 
 -- keymap in interactive mode
-function imap(shortcut, command)
+local function imap(shortcut, command)
   map('i', shortcut, command)
 end
 
 -- keymap in visual mode
-function vmap(shortcut, command)
+local function vmap(shortcut, command)
   map('v', shortcut, command)
 end
 
@@ -27,16 +28,26 @@ nmap('<leader>q', '<cmd>quit<CR>')
 
 -- jk to exit and save
 imap('jk', '<Esc>:w<CR>')
+
 -- Esc to exit and save
 imap('<Esc>', '<Esc>:w<CR>')
+
 -- x deletes and saves in normal mode
 nmap('x', 'x:w<CR>')
+
+-- dd deletes and saves
+nmap('dd', 'dd:w<CR>')
 
 -- remap j and k to move across display lines and not real lines
 nmap('k', 'gk')
 nmap('gk', 'k')
 nmap('j', 'gj')
 nmap('gj', 'j')
+
+-- spelling keybindings
+-- space s is next misspelled word
+nmap('<leader>s', ']s')
+nmap('<leader>sc', 'z=')
 
 -- one comment command to rule them all
 vmap('<leader>c', '<Plug>ToggleCommaround<CR>')
@@ -48,6 +59,9 @@ nmap('<leader>b', '<cmd>JABSOpen<CR>')
 imap('<c-c>', '"*y :let @+=@*<CR>')
 imap('<c-v>', '"+p')
 
+-- emoji picker
+vim.keymap.set("i", "<C-i>", "<cmd>IconPickerInsert<cr>")
+
 -- telescope
 nmap("<leader>ff", "<cmd>lua require('telescope.builtin').find_files()<CR>")
 nmap("<leader>fg", "<cmd>lua require('telescope.builtin').live_grep()<CR>")
@@ -58,6 +72,15 @@ nmap("<leader>fh", "<cmd>lua require('telescope.builtin').help_tags()<CR>")
 nmap('<leader>tt', '<cmd>NvimTreeFocus<CR>')
 nmap('<leader>tc', '<cmd>NvimTreeClose<CR>')
 nmap('<leader>tr', '<cmd>NvimTreeRefresh<CR>')
+
+-- nvim-test
+nmap('<leader>ts', '<cmd>TestSuite<CR>')
+nmap('<leader>tf', '<cmd>TestFile<CR>')
+nmap('<leader>te', '<cmd>TestEdit<CR>')
+nmap('<leader>tn', '<cmd>TestNearest<CR>')
+nmap('<leader>tl', '<cmd>TestLast<CR>')
+nmap('<leader>tv', '<cmd>TestVisit<CR>')
+nmap('<leader>ti', '<cmd>TestInfo<CR>')
 
 -- rest-nvim
 nmap('<leader>rr', '<Plug>RestNvim<CR>')

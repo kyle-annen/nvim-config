@@ -23,6 +23,7 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 --- nvim-cmp configuration
 local cmp = require'cmp'
 
+
 cmp.setup({
   snippet = {
     expand = function(args)

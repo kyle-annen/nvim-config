@@ -1,3 +1,4 @@
+local vim = vim
 local ensure_packer = function()
   local fn = vim.fn
   local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
@@ -22,7 +23,8 @@ return require('packer').startup(function(use)
   use {
     'williamboman/mason.nvim',
     requires = {
-      { 'williamboman/mason-lspconfig.nvim'},
+      'williamboman/mason-lspconfig.nvim',
+      'neovim/nvim-lspconfig'
     },
     config = function()
       -- order dependent loading
@@ -43,22 +45,36 @@ return require('packer').startup(function(use)
           'dockerls',
           'eslint',
           'elixirls',
+          'ruby_ls',
           'tsserver',
-          'jsonnet_ls',
           'marksman',
           'terraformls'
-       },
-        automatic_installation = true
+        },
+        automatic_installation = true,
+        handlers = {
+          function(server_name)
+            require('lspconfig')[server_name].setup {}
+          end,
+          ['ruby_ls'] = function()
+            require('lspconfig').ruby_ls.setup({
+              cmd = { 'bundle', 'exec', 'ruby-lsp' }
+            })
+          end
+        }
       }
     end
   }
 
-  -- use nvim-dap for language agnostic debugging (via LSP)
-  -- https://github.com/mfussenegger/nvim-dap#usage
-  use 'mfussenegger/nvim-dap'
+  -- use lsp-format to auto format code
+  use {
+    'lukas-reineke/lsp-format.nvim',
+    config = function()
+      require('lsp-format')
+    end
+  }
 
-  -- prevent nested nvim
-  use "samjwill/nvim-unception"
+  -- null-ls for formaters and linters
+  use 'jose-elias-alvarez/null-ls.nvim'
 
   -- cmp framework for auto-completion support
   use 'hrsh7th/nvim-cmp'
@@ -68,6 +84,21 @@ return require('packer').startup(function(use)
   use 'hrsh7th/cmp-buffer'
   use 'hrsh7th/cmp-path'
   use 'hrsh7th/cmp-cmdline'
+
+  -- use nvim-test as a test runner
+  use {
+    'klen/nvim-test',
+    config = function()
+      require('nvim-test').setup()
+    end
+  }
+
+  -- use nvim-dap for language agnostic debugging (via LSP)
+  -- https://github.com/mfussenegger/nvim-dap#usage
+  use 'mfussenegger/nvim-dap'
+
+  -- prevent nested nvim
+  use "samjwill/nvim-unception"
 
   -- snippet engine for snippet support
   use 'hrsh7th/vim-vsnip'
@@ -147,10 +178,20 @@ return require('packer').startup(function(use)
   use { 'p00f/nvim-ts-rainbow' }
 
   -- use nvim-ts-autotag for bracket and html tag completion
-  use {
-    'windwp/nvim-ts-autotag',
+  use { 'windwp/nvim-ts-autotag',
     config = function()
       require('nvim-ts-autotag').setup()
+    end
+  }
+
+  -- use indent-blankline to highlight indentations
+  use {
+    'lukas-reineke/indent-blankline.nvim',
+    config = function()
+      require('indent_blankline').setup {
+        show_current_context = true,
+        show_current_context_start = true,
+      }
     end
   }
 
@@ -172,20 +213,6 @@ return require('packer').startup(function(use)
     requires = { 'nvim-tree/nvim-web-devicons' }
   }
 
-  -- add biscuits, ghost snippet text to show opposite bracket
-  use {
-    'code-biscuits/nvim-biscuits',
-    config = function()
-      require('nvim-biscuits').setup({
-        default_config = {
-          max_length = 12,
-          min_distance = 5,
-          prefix_string = ' 📎 '
-        }
-      })
-    end
-  }
-
   -- show a vscode like lightbulb next to code actions
   use {
     'kosayoda/nvim-lightbulb',
@@ -201,10 +228,27 @@ return require('packer').startup(function(use)
   -- adds icons to codeactions
   use 'onsails/lspkind.nvim'
 
+  -- improves general neovim ui
+  use { 'stevearc/dressing.nvim' }
+
+  -- adds an emoji picker
+  use {
+    'ziontee113/icon-picker.nvim',
+    requires = { 'stevearc/dressing.nvim' },
+    config = function()
+      require('icon-picker').setup({ disable_legacy_commands = true })
+    end
+  }
+
   -- add function signatures to popup on hover
   use {
     'ray-x/lsp_signature.nvim',
-    config = function() require('lsp_signature').setup({}) end
+    config = function()
+      require('lsp_signature').setup({
+        fix_pos = true,
+        hint_prefix = ""
+      })
+    end
   }
 
   -- smooth scrolling
