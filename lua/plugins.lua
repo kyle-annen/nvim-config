@@ -134,6 +134,10 @@ return require('packer').startup(function(use)
     end
   }
 
+  -- use Gruvbox Theme
+  use { "ellisonleao/gruvbox.nvim" }
+
+
   -- nvim tree for file tree
   use {
     'nvim-tree/nvim-tree.lua',
