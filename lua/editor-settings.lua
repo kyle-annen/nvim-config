@@ -53,4 +53,5 @@ vim.o.ignorecase = true
 vim.o.smartcase = true
 
 -- use builin spellchecking
+vim.opt.spell = true;
 vim.opt.spelllang = 'en_us'

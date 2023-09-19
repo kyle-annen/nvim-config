@@ -51,16 +51,19 @@ nmap('<leader>sc', 'z=')
 
 -- one comment command to rule them all
 vmap('<leader>c', '<Plug>ToggleCommaround<CR>')
+nmap('<leader>c', '<Plug>ToggleCommaround<CR>')
+
 
 -- opens JABS buffer picker
 nmap('<leader>b', '<cmd>JABSOpen<CR>')
 
 -- copy and paste with ctrl-{c,v}
-imap('<c-c>', '"*y :let @+=@*<CR>')
-imap('<c-v>', '"+p')
+-- TODO(Kyle): find a better way to do this
+-- nmap('<c-c>', '"*y :let @+=@*<CR>')
+-- nmap('<c-v>', '"+p')
 
 -- emoji picker
-vim.keymap.set("i", "<C-i>", "<cmd>IconPickerInsert<cr>")
+imap("<C-i>", "<cmd>IconPickerInsert<cr>")
 
 -- telescope
 nmap("<leader>ff", "<cmd>lua require('telescope.builtin').find_files()<CR>")

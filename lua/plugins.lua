@@ -1,4 +1,12 @@
+-- TODO(Kyle): find a better way to do this
+-- prevent lua from yellling about vim not being defined
 local vim = vim
+
+-- disable netrw as directed by nvim-tree.lua
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+-- ensure packer
 local ensure_packer = function()
   local fn = vim.fn
   local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
@@ -11,7 +19,6 @@ local ensure_packer = function()
 end
 
 local packer_bootstrap = ensure_packer()
-
 return require('packer').startup(function(use)
   -- packer manages packer
   use 'wbthomason/packer.nvim'
@@ -76,22 +83,53 @@ return require('packer').startup(function(use)
   -- null-ls for formaters and linters
   use 'jose-elias-alvarez/null-ls.nvim'
 
+  -- copilot.lua for copilot
+  use {
+    "zbirenbaum/copilot.lua",
+    config = function()
+      require("copilot").setup({
+        suggestion = { enabled = false },
+        panel = { enabled = false },
+      })
+    end
+  }
+
   -- cmp framework for auto-completion support
   use 'hrsh7th/nvim-cmp'
 
+  -- snippet engine for snippet support
+  use 'hrsh7th/vim-vsnip'
+
   -- install different completion sources
-  use 'hrsh7th/cmp-nvim-lsp'
+  use 'f3fora/cmp-spell'
   use 'hrsh7th/cmp-buffer'
-  use 'hrsh7th/cmp-path'
   use 'hrsh7th/cmp-cmdline'
+  use 'hrsh7th/cmp-nvim-lsp'
+  use 'hrsh7th/cmp-path'
+  use 'hrsh7th/cmp-vsnip'
+
+  -- use copilot-cmp for copilot completion
+  use {
+    "zbirenbaum/copilot-cmp",
+    after = { "copilot.lua" },
+    config = function()
+      require("copilot_cmp").setup()
+    end
+  }
 
   -- use nvim-test as a test runner
   use {
     'klen/nvim-test',
     config = function()
       require('nvim-test').setup()
+      require('nvim-test.runners.rspec'):setup {
+        command = 'bundle'
+      }
     end
   }
+
+  -- use nvim-testnav for test navigation
+  use { 'davebrace/vim-testnav' }
 
   -- use nvim-dap for language agnostic debugging (via LSP)
   -- https://github.com/mfussenegger/nvim-dap#usage
@@ -100,9 +138,6 @@ return require('packer').startup(function(use)
   -- prevent nested nvim
   use "samjwill/nvim-unception"
 
-  -- snippet engine for snippet support
-  use 'hrsh7th/vim-vsnip'
-  use 'hrsh7th/cmp-vsnip'
 
   -- bracket auto-pairing
   use {
@@ -137,6 +172,13 @@ return require('packer').startup(function(use)
   -- use Gruvbox Theme
   use { "ellisonleao/gruvbox.nvim" }
 
+  -- colorize hex color codes
+  use {
+    'NvChad/nvim-colorizer.lua',
+    config = function()
+      require('colorizer').setup()
+    end
+  }
 
   -- nvim tree for file tree
   use {
@@ -151,8 +193,14 @@ return require('packer').startup(function(use)
     run = function()
       local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
       ts_update()
+    end,
+    config = function()
+      require('nvim-treesitter.configs').setup {
+        highlight = { enable = true }
+      }
     end
   }
+
 
   -- use instead of git gutter, this is not tested so I may revert to git gutters
   use {

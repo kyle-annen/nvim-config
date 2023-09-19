@@ -1,8 +1,10 @@
+-- silence vim warning
+local vim = vim
 -- `on_attach` callback will be called after a language server
 -- instance has been attached to an open buffer with matching filetype
 -- set key mappings for hover documentation, goto definitions, goto references, etc
 local on_attach = function(client, bufnr)
-  local opts = { noremap=true, silent=true }
+  local opts = { noremap = true, silent = true }
 
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
@@ -20,9 +22,19 @@ end
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
+-- define utility function
+local has_words_before = function()
+  local cursor = vim.api.nvim_win_get_cursor(0)
+  return (vim.api.nvim_buf_get_lines(0, cursor[1] - 1, cursor[1], true)[1] or ''):sub(cursor[2], cursor[2]):match('%s')
+end
 --- nvim-cmp configuration
-local cmp = require'cmp'
+local cmp = require('cmp')
+local lspkind = require('lspkind')
 
+--- nvim-cmp use tab to cycle auto completion
+local feedkey = function(key, mode)
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
+end
 
 cmp.setup({
   snippet = {
@@ -33,54 +45,61 @@ cmp.setup({
       vim.fn["vsnip#anonymous"](args.body)
     end,
   },
-  mapping = {
-    ['<CR>'] = cmp.mapping.confirm({ select = true }),
-  },
   sources = cmp.config.sources({
+    {
+      name = 'spell',
+      option = {
+        keep_all_entries = false,
+        enable_in_context = function() return true end,
+      }
+    },
     { name = 'nvim_lsp' },
+    { name = 'copilot' },
     { name = 'vsnip' }, -- For vsnip users.
     { name = 'buffer' }
-  })
-})
-
---- nvim-cmp use tab to cycle auto completion
-local feedkey = function(key, mode)
-  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
-end
-
-cmp.setup({
+  }),
+  formatting = {
+    format = lspkind.cmp_format({
+      mode = "symbol",
+      max_width = 50,
+      symbol_map = { Copilot = "" }
+    })
+  },
   -- other settings ...
   mapping = {
-    -- other mappings ...
-    ["<Tab>"] = cmp.mapping(function(fallback)
+    -- confirm with Enter
+    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    -- select with Tab
+    ['<Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
-	cmp.select_next_item()
+        cmp.select_next_item()
       elseif vim.fn["vsnip#available"](1) == 1 then
-	feedkey("<Plug>(vsnip-expand-or-jump)", "")
+        feedkey("<Plug>(vsnip-expand-or-jump)", "")
       elseif has_words_before() then
-	cmp.complete()
+        cmp.complete()
       else
-	fallback()
+        fallback()
       end
     end, { "i", "s" }),
+    -- selet up with Shift-Tab
     ["<S-Tab>"] = cmp.mapping(function()
       if cmp.visible() then
-	cmp.select_prev_item()
+        cmp.select_prev_item()
       elseif vim.fn["vsnip#jumpable"](-1) == 1 then
-	feedkey("<Plug>(vsnip-jump-prev)", "")
+        feedkey("<Plug>(vsnip-jump-prev)", "")
       end
     end, { "i", "s" })
   }
 })
 
 -- tree sitter config
-require'nvim-treesitter.configs'.setup {
+require 'nvim-treesitter.configs'.setup {
   ensure_installed = "all",
   sync_install = false,
-  ignore_install = { },
+  ignore_install = {},
   highlight = {
     enable = true,
-    disable = { },
+    disable = {},
   },
 }
 
