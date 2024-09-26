@@ -20,6 +20,7 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
 end
 
+
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- define utility function
@@ -56,7 +57,7 @@ cmp.setup({
     { name = 'nvim_lsp' },
     { name = 'copilot' },
     { name = 'vsnip' }, -- For vsnip users.
-    { name = 'buffer' }
+    { name = 'buffer' },
   }),
   formatting = {
     format = lspkind.cmp_format({

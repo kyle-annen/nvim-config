@@ -52,7 +52,7 @@ return require('packer').startup(function(use)
           'dockerls',
           'eslint',
           'elixirls',
-          'ruby_ls',
+          'solargraph',
           'tsserver',
           'marksman',
           'terraformls'
@@ -61,11 +61,6 @@ return require('packer').startup(function(use)
         handlers = {
           function(server_name)
             require('lspconfig')[server_name].setup {}
-          end,
-          ['ruby_ls'] = function()
-            require('lspconfig').ruby_ls.setup({
-              cmd = { 'bundle', 'exec', 'ruby-lsp' }
-            })
           end
         }
       }
@@ -148,6 +143,10 @@ return require('packer').startup(function(use)
   -- Git commands
   use 'tpope/vim-fugitive'
 
+  -- Git diff viewer
+  -- Packer
+  use "sindrets/diffview.nvim"
+
   -- General commenting plugin
   use 'gennaro-tedesco/nvim-commaround'
 
@@ -201,7 +200,6 @@ return require('packer').startup(function(use)
     end
   }
 
-
   -- use instead of git gutter, this is not tested so I may revert to git gutters
   use {
     'lewis6991/gitsigns.nvim',
@@ -240,13 +238,35 @@ return require('packer').startup(function(use)
   use {
     'lukas-reineke/indent-blankline.nvim',
     config = function()
-      require('indent_blankline').setup {
-        show_current_context = true,
-        show_current_context_start = true,
+      local highlight = {
+        "RainbowRed",
+        "RainbowYellow",
+        "RainbowBlue",
+        "RainbowOrange",
+        "RainbowGreen",
+        "RainbowViolet",
+        "RainbowCyan",
+      }
+
+      local hooks = require "ibl.hooks"
+      hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
+        vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#E06C75" })
+        vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#E5C07B" })
+        vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#61AFEF" })
+        vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#D19A66" })
+        vim.api.nvim_set_hl(0, "RainbowGreen", { fg = "#98C379" })
+        vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#56B6C2" })
+        vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#C678DD" })
+      end)
+
+      require('ibl').setup {
+        indent = { highlight = highlight }
       }
     end
   }
 
+  -- use min.align to align text
+  use { 'echasnovski/mini.align', branch = 'stable' }
 
   -- [<leader>?] add cheatsheet
   use {
@@ -398,6 +418,22 @@ return require('packer').startup(function(use)
         custom_dynamic_variables = {},
         yank_dry_run = true,
       })
+    end
+  }
+
+  use {
+    "kndndrj/nvim-dbee",
+    requires = {
+      "MunifTanjim/nui.nvim",
+    },
+    run = function()
+      -- Install tries to automatically detect the install method.
+      -- if it fails, try calling it with one of these parameters:
+      --    "curl", "wget", "bitsadmin", "go"
+      require("dbee").install()
+    end,
+    config = function()
+      require("dbee").setup( --[[optional config]])
     end
   }
 

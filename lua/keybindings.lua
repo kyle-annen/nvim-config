@@ -65,6 +65,22 @@ nmap('<leader>b', '<cmd>JABSOpen<CR>')
 -- emoji picker
 imap("<C-i>", "<cmd>IconPickerInsert<cr>")
 
+-- diffview
+-- view branch file history
+--[[ nmap("<leader>dbh", "<cmd>DiffviewFileHistory<cr>")
+-- view curren file history
+nmap("<leader>dh", "<cmd>DiffviewFileHistory %<cr>")
+-- open diffview
+nmap("<leader>do", "<cmd>DiffviewOpen")
+-- close diffview
+nmap("<leader>dc", "<cmd>DiffviewClose<CR>")
+-- toggle the file panel
+nmap("<leader>df", "<cmd>DiffviewToggleFiles<CR>")
+-- focus the file panel
+map("<leader>dff", "<cmd>DiffviewFocusFiles<CR>")
+-- refresh the file panel
+nmap("<leader>dfr", "<cmd>DiffviewRefresh<CR>") ]]
+
 -- telescope
 nmap("<leader>ff", "<cmd>lua require('telescope.builtin').find_files()<CR>")
 nmap("<leader>fg", "<cmd>lua require('telescope.builtin').live_grep()<CR>")
@@ -77,13 +93,13 @@ nmap('<leader>tc', '<cmd>NvimTreeClose<CR>')
 nmap('<leader>tr', '<cmd>NvimTreeRefresh<CR>')
 
 -- nvim-test
-nmap('<leader>ts', '<cmd>TestSuite<CR>')
-nmap('<leader>tf', '<cmd>TestFile<CR>')
-nmap('<leader>te', '<cmd>TestEdit<CR>')
-nmap('<leader>tn', '<cmd>TestNearest<CR>')
-nmap('<leader>tl', '<cmd>TestLast<CR>')
-nmap('<leader>tv', '<cmd>TestVisit<CR>')
-nmap('<leader>ti', '<cmd>TestInfo<CR>')
+nmap('<leader>ts', '<cmd>TestSuite<CR><cmd>wincmd =<CR>')
+nmap('<leader>tf', '<cmd>TestFile<CR><cmd>wincmd =<CR>')
+nmap('<leader>te', '<cmd>TestEdit<CR><cmd>wincmd =<CR>')
+nmap('<leader>tn', '<cmd>TestNearest<CR><cmd>wincmd =<CR>')
+nmap('<leader>tl', '<cmd>TestLast<CR><cmd>wincmd =<CR>')
+nmap('<leader>tv', '<cmd>TestVisit<CR><cmd>wincmd =<CR>')
+nmap('<leader>ti', '<cmd>TestInfo<CR><cmd>wincmd =<CR>')
 
 -- rest-nvim
 nmap('<leader>rr', '<Plug>RestNvim<CR>')
@@ -92,3 +108,6 @@ nmap('<leader>rl', '<Plug>RestNvimLast<CR>')
 
 -- toggle-term
 nmap('<leader>t', '<cmd>ToggleTerm size=20 dir=git_dir direction=horizontal<CR>')
+
+-- nvim-dbee
+nmap('<leader>db', '<cmd>lua require("dbee").open()<CR>')
