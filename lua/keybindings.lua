@@ -20,9 +20,18 @@ local function vmap(shortcut, command)
   map('v', shortcut, command)
 end
 
+-- keymap in terminal
+local function tmap(shortcut, command)
+  map('t', shortcut, command)
+end
+
 -- ------------------------- keybindings ----------------------------------------------
 -- set leader as space
 vim.g.mapleader = ' '
+
+-- exit insert mode in terminal with 'jk'
+tmap('jk', "<C--\\><C-n>")
+--
 nmap('<leader>w', '<cmd>write<CR>')
 nmap('<leader>q', '<cmd>quit<CR>')
 
@@ -43,6 +52,12 @@ nmap('k', 'gk')
 nmap('gk', 'k')
 nmap('j', 'gj')
 nmap('gj', 'j')
+
+-- scroll multiple lines at a time
+nmap('<C-j>', "<cmd>lua require('cinnamon').scroll('20j')<CR>")
+nmap('<C-k>', "<cmd>lua require('cinnamon').scroll('20k')<CR>")
+vmap('<C-j>', "<cmd>lua require('cinnamon').scroll('20j')<CR>")
+vmap('<C-k>', "<cmd>lua require('cinnamon').scroll('20k')<CR>")
 
 -- spelling keybindings
 -- space s is next misspelled word

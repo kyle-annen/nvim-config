@@ -34,8 +34,8 @@ vim.o.tabstop = 2
 -- set new line in code block indented 2 spaces
 vim.o.shiftwidth = 2
 
--- ensure tab always 2 spaces
-vim.o.smarttab = 2
+-- ensure tab is smart
+vim.o.smarttab = true
 
 -- tab in insert mode is spaces
 vim.o.expandtab = true

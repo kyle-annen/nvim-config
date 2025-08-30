@@ -53,9 +53,8 @@ return require('packer').startup(function(use)
           'eslint',
           'elixirls',
           'solargraph',
-          'tsserver',
           'marksman',
-          'terraformls'
+          'terraformls',
         },
         automatic_installation = true,
         handlers = {
@@ -75,7 +74,7 @@ return require('packer').startup(function(use)
     end
   }
 
-  -- null-ls for formaters and linters
+  -- null-ls for for matters and liter
   use 'jose-elias-alvarez/null-ls.nvim'
 
   -- copilot.lua for copilot
@@ -234,36 +233,36 @@ return require('packer').startup(function(use)
     end
   }
 
-  -- use indent-blankline to highlight indentations
-  use {
-    'lukas-reineke/indent-blankline.nvim',
-    config = function()
-      local highlight = {
-        "RainbowRed",
-        "RainbowYellow",
-        "RainbowBlue",
-        "RainbowOrange",
-        "RainbowGreen",
-        "RainbowViolet",
-        "RainbowCyan",
-      }
-
-      local hooks = require "ibl.hooks"
-      hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
-        vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#E06C75" })
-        vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#E5C07B" })
-        vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#61AFEF" })
-        vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#D19A66" })
-        vim.api.nvim_set_hl(0, "RainbowGreen", { fg = "#98C379" })
-        vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#56B6C2" })
-        vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#C678DD" })
-      end)
-
-      require('ibl').setup {
-        indent = { highlight = highlight }
-      }
-    end
-  }
+  --  -- use indent-blankline to highlight indentations
+  --  use {
+  --    'lukas-reineke/indent-blankline.nvim',
+  --    config = function()
+  --      local highlight = {
+  --        "RainbowRed",
+  --        "RainbowYellow",
+  --        "RainbowBlue",
+  --        "RainbowOrange",
+  --        "RainbowGreen",
+  --        "RainbowViolet",
+  --        "RainbowCyan",
+  --      }
+  --
+  --      local hooks = require "ibl.hooks"
+  --      -- create the highlight groups in the highlight setup hook, so they are reset
+  --      -- every time the colorscheme changes
+  --      hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
+  --        vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#E06C75" })
+  --        vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#E5C07B" })
+  --        vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#61AFEF" })
+  --        vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#D19A66" })
+  --        vim.api.nvim_set_hl(0, "RainbowGreen", { fg = "#98C379" })
+  --        vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#C678DD" })
+  --        vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#56B6C2" })
+  --      end)
+  --
+  --      require("ibl").setup { indent = { highlight = highlight } }
+  --    end
+  --  }
 
   -- use min.align to align text
   use { 'echasnovski/mini.align', branch = 'stable' }
@@ -303,6 +302,20 @@ return require('packer').startup(function(use)
   -- improves general neovim ui
   use { 'stevearc/dressing.nvim' }
 
+  -- adds LSP breadcrumbs
+  use({
+    "utilyre/barbecue.nvim",
+    tag = "*",
+    requires = {
+      "SmiteshP/nvim-navic",
+      "nvim-tree/nvim-web-devicons", -- optional dependency
+    },
+    after = "nvim-web-devicons",     -- keep this if you're using NvChad
+    config = function()
+      require("barbecue").setup()
+    end,
+  })
+
   -- adds an emoji picker
   use {
     'ziontee113/icon-picker.nvim',
@@ -311,6 +324,12 @@ return require('packer').startup(function(use)
       require('icon-picker').setup({ disable_legacy_commands = true })
     end
   }
+
+  -- timeout LSPs not in use
+  --  use {
+  --    "hinell/lsp-timeout.nvim",
+  --    requires = { "neovim/nvim-lspconfig" }
+  --  }
 
   -- add function signatures to popup on hover
   use {
@@ -325,9 +344,14 @@ return require('packer').startup(function(use)
 
   -- smooth scrolling
   use {
-    'gen740/SmoothCursor.nvim',
+    'declancm/cinnamon.nvim',
     config = function()
-      require('smoothcursor').setup()
+      require('cinnamon').setup {
+        keymaps = {
+          basic = true,
+          extra = true,
+        },
+      }
     end
   }
 
@@ -421,21 +445,21 @@ return require('packer').startup(function(use)
     end
   }
 
-  use {
-    "kndndrj/nvim-dbee",
-    requires = {
-      "MunifTanjim/nui.nvim",
-    },
-    run = function()
-      -- Install tries to automatically detect the install method.
-      -- if it fails, try calling it with one of these parameters:
-      --    "curl", "wget", "bitsadmin", "go"
-      require("dbee").install()
-    end,
-    config = function()
-      require("dbee").setup( --[[optional config]])
-    end
-  }
+  --  use {
+  --    "kndndrj/nvim-dbee",
+  --    requires = {
+  --      "MunifTanjim/nui.nvim",
+  --    },
+  --    run = function()
+  --      -- Install tries to automatically detect the install method.
+  --      -- if it fails, try calling it with one of these parameters:
+  --      --    "curl", "wget", "bitsadmin", "go"
+  --      require("dbee").install()
+  --    end,
+  --    config = function()
+  --      require("dbee").setup( --[[optional config]])
+  --    end
+  --  }
 
   -- deletes all trailing whitespace on save
   use {

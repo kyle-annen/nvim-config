@@ -54,8 +54,8 @@ cmp.setup({
         enable_in_context = function() return true end,
       }
     },
-    { name = 'nvim_lsp' },
     { name = 'copilot' },
+    { name = 'nvim_lsp' },
     { name = 'vsnip' }, -- For vsnip users.
     { name = 'buffer' },
   }),
