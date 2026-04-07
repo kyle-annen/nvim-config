@@ -59,7 +59,11 @@ return require('packer').startup(function(use)
         automatic_installation = true,
         handlers = {
           function(server_name)
-            require('lspconfig')[server_name].setup {}
+            local lsp_configs = require('lsp-configs')
+            require('lspconfig')[server_name].setup {
+              on_attach = lsp_configs.on_attach,
+              capabilities = lsp_configs.capabilities,
+            }
           end
         }
       }
