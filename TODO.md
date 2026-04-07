@@ -8,7 +8,7 @@
 - [x] **Wire up `on_attach` and `capabilities`** — Exported from `lsp-configs.lua` as a module return table and wired into the mason-lspconfig handler in `plugins.lua`. Removed custom LSP keybindings in favor of Neovim 0.10 built-in defaults (`grr`, `gra`, `grn`, `gd`, `K`, etc.). Also fixed deprecated `vim.lsp.buf.formatting()` → `vim.lsp.buf.format()`.
 - [ ] **Update Neovim to 0.12.1** — Currently on 0.10.4. Neovim 0.11+ has reliable built-in LSP keybindings (`grr`, `gra`, `grn`, etc.) which don't work on 0.10.4. Also brings built-in signature help, breadcrumbs/winbar, and performance improvements. ⚠️ Will break: `p00f/nvim-ts-rainbow`, `rest-nvim` (old API), `barbecue.nvim` (archived). `copilot.lua` v2 requires ≥0.11.
 - [x] **Switch from Solargraph to ruby-lsp** — Replaced `solargraph` with `ruby_lsp` in mason-lspconfig `ensure_installed` in `plugins.lua`. Shopify's ruby-lsp is significantly faster, uses less memory, and has better Rails support.
-- [ ] **Fix `<leader>t` keybinding conflict** — `<leader>t` (ToggleTerm) causes a `timeoutlen` delay on all `t`-prefixed mappings (`<leader>ts`, `<leader>tf`, `<leader>tt`, etc.). Move ToggleTerm to a non-conflicting binding like `<leader>T` or `<C-\>`.
+- [x] **Fix `<leader>t` keybinding conflict** — Won't fix. The `timeoutlen` delay on `t`-prefixed mappings is acceptable.
 - [ ] **Fix duplicate Treesitter config and remove `ensure_installed = "all"`** — Treesitter is configured in both `plugins.lua` and `lsp-configs.lua` (second overwrites first). Consolidate to one location and specify only needed languages (ruby, lua, javascript, html, css, yaml, json, etc.).
 
 ## 🟠 Significant Performance Concerns
