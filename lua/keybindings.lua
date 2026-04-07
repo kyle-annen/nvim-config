@@ -26,11 +26,10 @@ local function tmap(shortcut, command)
 end
 
 -- ------------------------- keybindings ----------------------------------------------
--- set leader as space
-vim.g.mapleader = ' '
+-- leader is set in init.lua (must be set before lazy.nvim)
 
 -- exit insert mode in terminal with 'jk'
-tmap('jk', "<C--\\><C-n>")
+tmap('jk', "<C-\\><C-n>")
 --
 nmap('<leader>w', '<cmd>write<CR>')
 nmap('<leader>q', '<cmd>quit<CR>')
