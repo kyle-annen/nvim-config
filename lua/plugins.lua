@@ -294,7 +294,14 @@ return require('packer').startup(function(use)
   }
 
   -- use nvim-notify for notifications
-  use { 'rcarriga/nvim-notify' }
+  use({
+    'rcarriga/nvim-notify',
+    config = function()
+      require("notify").setup({
+        background_colour = "#000000"
+      })
+    end
+  })
 
   -- adds icons to codeactions
   use 'onsails/lspkind.nvim'
