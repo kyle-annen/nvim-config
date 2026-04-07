@@ -52,7 +52,7 @@ return require('packer').startup(function(use)
           'dockerls',
           'eslint',
           'elixirls',
-          'solargraph',
+          'ruby_lsp',
           'marksman',
           'terraformls',
         },
