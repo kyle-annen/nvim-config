@@ -90,14 +90,33 @@ cmp.setup({
   }
 })
 
--- tree sitter config
+-- treesitter config (single source of truth — removed duplicate in plugins.lua)
 require 'nvim-treesitter.configs'.setup {
-  ensure_installed = "all",
+  ensure_installed = {
+    'ruby',
+    'typescript',
+    'tsx',
+    'javascript',
+    'html',
+    'css',
+    'scss',
+    'json',
+    'yaml',
+    'lua',
+    'bash',
+    'dockerfile',
+    'markdown',
+    'markdown_inline',
+    'terraform',
+    'elixir',
+    'vim',
+    'vimdoc',
+    'regex',
+    'embedded_template',
+  },
   sync_install = false,
-  ignore_install = {},
   highlight = {
     enable = true,
-    disable = {},
   },
 }
 

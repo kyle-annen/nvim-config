@@ -190,18 +190,13 @@ return require('packer').startup(function(use)
     config = function() require('nvim-tree').setup() end
   }
 
-  -- use treesitter for highlighting, this could cause problems as it is in progress
+  -- treesitter (config lives in lsp-configs.lua, this just handles the :TSUpdate hook)
   use {
     'nvim-treesitter/nvim-treesitter',
     run = function()
       local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
       ts_update()
     end,
-    config = function()
-      require('nvim-treesitter.configs').setup {
-        highlight = { enable = true }
-      }
-    end
   }
 
   -- use instead of git gutter, this is not tested so I may revert to git gutters

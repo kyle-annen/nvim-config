@@ -9,7 +9,7 @@
 - [ ] **Update Neovim to 0.12.1** — Currently on 0.10.4. Neovim 0.11+ has reliable built-in LSP keybindings (`grr`, `gra`, `grn`, etc.) which don't work on 0.10.4. Also brings built-in signature help, breadcrumbs/winbar, and performance improvements. ⚠️ Will break: `p00f/nvim-ts-rainbow`, `rest-nvim` (old API), `barbecue.nvim` (archived). `copilot.lua` v2 requires ≥0.11.
 - [x] **Switch from Solargraph to ruby-lsp** — Replaced `solargraph` with `ruby_lsp` in mason-lspconfig `ensure_installed` in `plugins.lua`. Shopify's ruby-lsp is significantly faster, uses less memory, and has better Rails support.
 - [x] **Fix `<leader>t` keybinding conflict** — Won't fix. The `timeoutlen` delay on `t`-prefixed mappings is acceptable.
-- [ ] **Fix duplicate Treesitter config and remove `ensure_installed = "all"`** — Treesitter is configured in both `plugins.lua` and `lsp-configs.lua` (second overwrites first). Consolidate to one location and specify only needed languages (ruby, lua, javascript, html, css, yaml, json, etc.).
+- [x] **Fix duplicate Treesitter config and remove `ensure_installed = "all"`** — Consolidated to single config in `lsp-configs.lua`. Replaced `"all"` with specific languages: ruby, typescript, tsx, javascript, html, css, scss, json, yaml, lua, bash, dockerfile, markdown, terraform, elixir, vim, embedded_template. Removed duplicate config from `plugins.lua`.
 
 ## 🟠 Significant Performance Concerns
 
