@@ -8,8 +8,6 @@ vim.wo.number = true
 
 -- set 86 character limit color
 vim.cmd [[set colorcolumn=85]]
-vim.api.nvim_set_hl(0, "ColorColumn", { ctermbg = 0, bg = "#3c3836" })
-vim.api.nvim_set_hl(0, "Normal", {})
 
 -- maintain undo history between sessions
 vim.cmd([[ set undofile ]])
@@ -19,9 +17,6 @@ vim.opt.termguicolors = true
 vim.opt.listchars:append "eol:↴"
 vim.opt.scrolloff = 5
 
--- set colorscheme
-vim.o.background = "dark"
-vim.cmd([[colorscheme gruvbox]])
 
 
 -------------------------------------- Editing
