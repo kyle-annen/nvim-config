@@ -40,15 +40,10 @@ return {
     end,
   },
 
-  -- Minimap
+  -- Minimap — disabled, incompatible with latest nvim-treesitter (requires removed ts_utils)
   {
     "gorbit99/codewindow.nvim",
-    event = "VeryLazy",
-    config = function()
-      local codewindow = require("codewindow")
-      codewindow.setup()
-      codewindow.apply_default_keybinds()
-    end,
+    enabled = false,
   },
 
   -- Statusline
