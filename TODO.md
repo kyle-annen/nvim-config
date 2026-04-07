@@ -3,7 +3,7 @@
 ## 🔴 Critical Performance Issues
 
 - [x] **Fix the save/format cascade** — Added timeout (750ms), per-buffer debounce (1s), and LSP capability check to `lsp-format-on-save-autocommand.lua`. Auto-save keybindings kept as-is. ⚠️ **Revisit:** formatting is still sync (blocks cursor/edits during the timeout window). Re-evaluate once other LSP noise fixes are in place.
-- [ ] **Disable or debounce `nvim-lightbulb`** — It fires `textDocument/codeAction` on every cursor move, hammering Solargraph. Either remove it or add heavy debouncing and filetype restrictions.
+- [x] **Disable or debounce `nvim-lightbulb`** — Restricted to `InsertLeave` event only (was firing on every cursor move). Removed unnecessary `FixCursorHold.nvim` dependency.
 - [ ] **Fix nvim-test rspec runner** — Add `args = { 'exec', 'rspec' }` to the runner setup in `plugins.lua` so `bundle exec rspec` is invoked correctly.
 - [ ] **Wire up `on_attach` and `capabilities`** — Pass them to the mason-lspconfig handler in `plugins.lua` so LSP keybindings actually bind and `cmp_nvim_lsp` capabilities are advertised to servers.
 - [ ] **Fix `<leader>t` keybinding conflict** — `<leader>t` (ToggleTerm) causes a `timeoutlen` delay on all `t`-prefixed mappings (`<leader>ts`, `<leader>tf`, `<leader>tt`, etc.). Move ToggleTerm to a non-conflicting binding like `<leader>T` or `<C-\>`.

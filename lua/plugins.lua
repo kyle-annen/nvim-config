@@ -287,9 +287,13 @@ return require('packer').startup(function(use)
   -- show a vscode like lightbulb next to code actions
   use {
     'kosayoda/nvim-lightbulb',
-    requires = 'antoinemadec/FixCursorHold.nvim',
     config = function()
-      require('nvim-lightbulb').setup({ autocmd = { enabled = true } })
+      require('nvim-lightbulb').setup({
+        autocmd = {
+          enabled = true,
+          events = { "InsertLeave" },
+        },
+      })
     end,
   }
 
