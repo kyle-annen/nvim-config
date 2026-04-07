@@ -117,7 +117,8 @@ return require('packer').startup(function(use)
     config = function()
       require('nvim-test').setup()
       require('nvim-test.runners.rspec'):setup {
-        command = 'bundle'
+        command = 'bundle',
+        args = { 'exec', 'rspec' },
       }
     end
   }
