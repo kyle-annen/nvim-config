@@ -22,7 +22,6 @@ return {
       "hrsh7th/cmp-cmdline",
       "f3fora/cmp-spell",
       "onsails/lspkind.nvim",
-      "zbirenbaum/copilot-cmp",
     },
     config = function()
       local cmp = require("cmp")
@@ -35,7 +34,6 @@ return {
           end,
         },
         sources = cmp.config.sources({
-          { name = "copilot" },
           { name = "nvim_lsp" },
           { name = "vsnip" },
           { name = "buffer" },
@@ -49,13 +47,6 @@ return {
             },
           },
         }),
-        formatting = {
-          format = lspkind.cmp_format({
-            mode = "symbol",
-            max_width = 50,
-            symbol_map = { Copilot = "" },
-          }),
-        },
         mapping = cmp.mapping.preset.insert({
           ["<CR>"] = cmp.mapping.confirm({ select = true }),
           ["<Tab>"] = cmp.mapping(function(fallback)
@@ -80,39 +71,4 @@ return {
       })
     end,
   },
-
-  { "hrsh7th/vim-vsnip" },
-
-  { "f3fora/cmp-spell" },
-
-  { "hrsh7th/cmp-buffer" },
-
-  { "hrsh7th/cmp-cmdline" },
-
-  { "hrsh7th/cmp-nvim-lsp" },
-
-  { "hrsh7th/cmp-path" },
-
-  { "hrsh7th/cmp-vsnip" },
-
-  {
-    "zbirenbaum/copilot.lua",
-    event = "InsertEnter",
-    config = function()
-      require("copilot").setup({
-        suggestion = { enabled = false },
-        panel = { enabled = false },
-      })
-    end,
-  },
-
-  {
-    "zbirenbaum/copilot-cmp",
-    dependencies = { "zbirenbaum/copilot.lua" },
-    config = function()
-      require("copilot_cmp").setup()
-    end,
-  },
-
-  { "onsails/lspkind.nvim" },
 }

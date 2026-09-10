@@ -13,7 +13,6 @@ vim.cmd [[set colorcolumn=85]]
 vim.cmd([[ set undofile ]])
 
 vim.opt.list = true
-vim.opt.termguicolors = true
 vim.opt.listchars:append "eol:↴"
 vim.opt.scrolloff = 5
 
@@ -38,6 +37,11 @@ vim.o.ignorecase = true
 -- don't ingnore capital letters in search query
 vim.o.smartcase = true
 
--- use builin spellchecking
-vim.opt.spell = true;
-vim.opt.spelllang = 'en_us'
+-- defer spell loading until after startup (spell file load is ~10ms)
+vim.api.nvim_create_autocmd("VimEnter", {
+  once = true,
+  callback = function()
+    vim.opt.spell = true
+    vim.opt.spelllang = "en_us"
+  end,
+})

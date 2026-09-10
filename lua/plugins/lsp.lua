@@ -74,14 +74,4 @@ return {
     end,
   },
 
-  {
-    "ray-x/lsp_signature.nvim",
-    event = "LspAttach",
-    config = function()
-      require("lsp_signature").setup({
-        fix_pos = true,
-        hint_prefix = "",
-      })
-    end,
-  },
 }

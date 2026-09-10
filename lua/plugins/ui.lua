@@ -59,7 +59,7 @@ return {
   -- Notifications
   {
     "rcarriga/nvim-notify",
-    lazy = false,
+    event = "VeryLazy",
     config = function()
       require("notify").setup({
         background_colour = "#000000",
@@ -74,16 +74,31 @@ return {
     event = "VeryLazy",
   },
 
-  -- Breadcrumbs / winbar -- archived, consider dropbar.nvim
+  -- Breadcrumbs / winbar
   {
-    "utilyre/barbecue.nvim",
+    "Bekaboo/dropbar.nvim",
     event = "BufReadPre",
-    dependencies = {
-      "SmiteshP/nvim-navic",
-      "nvim-tree/nvim-web-devicons",
-    },
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+  },
+
+  -- Keybinding popup
+  {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
     config = function()
-      require("barbecue").setup()
+      require("which-key").setup({
+        delay = 500,
+      })
+    end,
+  },
+
+  -- TODO comments highlighter + browser
+  {
+    "folke/todo-comments.nvim",
+    event = "VeryLazy",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
+      require("todo-comments").setup()
     end,
   },
 
@@ -101,12 +116,4 @@ return {
     end,
   },
 
-  -- Command-line completion
-  {
-    "gelguy/wilder.nvim",
-    event = "CmdlineEnter",
-    config = function()
-      require("wilder").setup({ modes = { ":", "/", "?" } })
-    end,
-  },
 }

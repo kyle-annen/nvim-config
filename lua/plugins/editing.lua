@@ -34,4 +34,36 @@ return {
     "samjwill/nvim-unception",
     lazy = false,
   },
+
+  {
+    "mbbill/undotree",
+    cmd = "UndotreeToggle",
+  },
+
+  {
+    "stevearc/conform.nvim",
+    event = "BufWritePost",
+    cmd = "ConformInfo",
+    config = function()
+      require("conform").setup({
+        formatters_by_ft = {
+          ruby = {},
+          javascript = { "prettier" },
+          typescript = { "prettier" },
+          typescriptreact = { "prettier" },
+          javascriptreact = { "prettier" },
+          css = { "prettier" },
+          scss = { "prettier" },
+          html = { "prettier" },
+          json = { "prettier" },
+          yaml = { "prettier" },
+          markdown = { "prettier" },
+          lua = { "stylua" },
+        },
+        format_after_save = {
+          lsp_fallback = true,
+        },
+      })
+    end,
+  },
 }

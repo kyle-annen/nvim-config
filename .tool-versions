@@ -1,1 +1,4 @@
+nodejs 22.15.0
 yarn 1.22.19
+lua 5.1.5
+tree-sitter 0.26.8

@@ -15,8 +15,8 @@
 
 - [x] **Add lazy-loading to command-only plugins** — Done as part of lazy.nvim migration. Plugins now lazy-load via `cmd`, `event`, `ft`, and `keys`.
 - [ ] **Evaluate `codewindow.nvim` (minimap)** — Always active, watches every buffer change. Consider disabling or lazy-loading it behind a toggle command.
-- [ ] **Evaluate `cinnamon.nvim` (smooth scrolling)** — Replaces native instant scrolling with animated frames. Can feel sluggish on large files. Consider removing or reducing animation length.
-- [ ] **Evaluate `barbecue.nvim` (breadcrumbs)** — Queries LSP for document symbols on every cursor move. Archived — consider `dropbar.nvim` or built-in winbar in 0.11+.
+- [x] **Evaluate `cinnamon.nvim` (smooth scrolling)** — Replaced with `neoscroll.nvim` (cubic easing).
+- [x] **Evaluate `barbecue.nvim` (breadcrumbs)** — Replaced with `dropbar.nvim`.
 - [x] **Reorder cmp sources** — Moved `nvim_lsp` and `copilot` above `spell` in completion sources.
 
 ## 🟡 Deprecated / Archived Plugins
@@ -26,11 +26,11 @@
 - [x] **Remove `p00f/nvim-ts-rainbow`** — Dropped during lazy.nvim migration (archived, breaks with modern treesitter).
 - [x] **Remove `antoinemadec/FixCursorHold.nvim`** — Dropped during lazy.nvim migration (unnecessary since Neovim 0.8).
 - [x] **Remove `nvim-tree` `tag = 'nightly'`** — Removed during lazy.nvim migration.
-- [ ] **Update `rest-nvim/rest.nvim`** — Disabled during migration (`enabled = false`). Old API is gone from main branch; needs migration to the rewrite.
-- [ ] **Replace `barbecue.nvim`** — Archived Jan 2025. Use `dropbar.nvim` or built-in winbar in 0.11+.
-- [ ] **Evaluate `ray-x/lsp_signature.nvim`** — 0.12 has built-in signature help triggering, may no longer be needed.
-- [ ] **Evaluate `gelguy/wilder.nvim`** — Stale (mostly VimScript, no recent activity). Watch for breakage.
-- [ ] **Evaluate `sudormrfbin/cheatsheet.nvim`** — Stale, depends on archived `popup.nvim`.
+- [x] **Update `rest-nvim/rest.nvim`** — Removed (dead weight while disabled).
+- [x] **Replace `barbecue.nvim`** — Replaced with `dropbar.nvim`.
+- [x] **Evaluate `ray-x/lsp_signature.nvim`** — Removed, superseded by Neovim 0.12 built-in signature help.
+- [x] **Evaluate `gelguy/wilder.nvim`** — Removed (stale VimScript).
+- [x] **Evaluate `sudormrfbin/cheatsheet.nvim`** — Removed (depends on archived popup.nvim).
 
 ## 🟡 Dead Code / Unused Config
 
@@ -49,8 +49,23 @@
 
 ## 🟢 Enhancements / New Features
 
-- [ ] **Add `rainbow-delimiters.nvim`** — Replace archived `nvim-ts-rainbow` with `HiPhish/rainbow-delimiters.nvim` for rainbow brackets.
-- [ ] **Add `indent-blankline.nvim` with rainbow indents** — Wire up with `rainbow-delimiters.nvim` for rainbow indent guides.
+- [x] **Add `rainbow-delimiters.nvim`** — Replaced archived `nvim-ts-rainbow` with `HiPhish/rainbow-delimiters.nvim`.
+- [x] **Add `indent-blankline.nvim` with rainbow indents** — Wired up with `rainbow-delimiters.nvim` for rainbow indent guides.
+
+## 🔵 Missing Functionality
+
+- [ ] **conform.nvim** — No formatter configured. LSP formatting is inconsistent across servers. Add per-filetype formatters: rubocop (Ruby), prettier (JS/TS/CSS/JSON), stylua (Lua).
+- [ ] **trouble.nvim** — No workspace-wide diagnostic list. Add `trouble.nvim` for browsing all LSP errors/warnings across the project.
+- [ ] **nvim-dap-ui + Ruby/JS adapters** — `nvim-dap` is installed but has no UI and no language adapters. Non-functional as-is. Add `nvim-dap-ui`, `nvim-dap-virtual-text`, and a Ruby debug adapter.
+- [ ] **nvim-surround** — No surround plugin. Missing: change `"..."` → `'...'`, wrap selections in brackets/tags, delete surrounding delimiters.
+- [ ] **grug-far.nvim** — No find-and-replace across files. Telescope can find but not replace. Add `grug-far.nvim` (or `spectre.nvim`).
+- [ ] **Session management** — No `auto-session` or `persistence.nvim`. Every restart loses window layout and open buffers.
+- [ ] **Harpoon** — No quick-jump between frequently-used files. More ergonomic than telescope for files you return to repeatedly.
+- [ ] **gitsigns keybindings** — `gitsigns.nvim` is installed but nothing is bound. Add: `]c`/`[c` hunk navigation, `<leader>hs` stage hunk, `<leader>hb` inline blame.
+- [ ] **which-key** — 30+ leader bindings with no discoverability. Add `which-key.nvim` so pressing `<leader>` shows a popup of available bindings.
+- [ ] **nvim-lint** — For linters without LSP servers or to supplement LSP linting (e.g. standalone rubocop, eslint rules).
+- [ ] **Graphical undo tree** — `mbbill/undotree` is installed and bound to `<leader>u`. Verify it's working correctly and consider `debugloop/telescope-undo.nvim` as a telescope-based alternative.
+- [ ] **Re-enable diffview keybindings** — All diffview bindings are commented out in `keybindings.lua`. Uncomment or rebind.
 
 ---
 

@@ -1,18 +1,19 @@
--- Testing: nvim-test runner, test navigation
+-- Testing: test runner, test navigation
 return {
   {
     "klen/nvim-test",
     config = function()
-      require("nvim-test").setup()
+      vim.env.SIMPLECOV = "1"
+      require("nvim-test").setup({
+        termOpts = {
+          direction = "vertical",
+          width = 80,
+        },
+      })
       require("nvim-test.runners.rspec"):setup {
         command = "bundle",
-        args = { "exec", "rspec" },
       }
     end,
     cmd = { "TestSuite", "TestFile", "TestEdit", "TestNearest", "TestLast", "TestVisit", "TestInfo" },
-  },
-  {
-    "davebrace/vim-testnav",
-    event = "VeryLazy",
-  },
+  }
 }

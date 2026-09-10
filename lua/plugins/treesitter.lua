@@ -39,6 +39,14 @@ return {
       if #to_install > 0 then
         require('nvim-treesitter').install(to_install)
       end
+
+      -- Neovim only auto-enables treesitter highlights for a few built-in
+      -- filetypes (lua, markdown, help). Enable it for everything else.
+      vim.api.nvim_create_autocmd('FileType', {
+        callback = function(args)
+          pcall(vim.treesitter.start, args.buf)
+        end,
+      })
     end,
   },
   {
@@ -46,4 +54,5 @@ return {
     event = 'InsertEnter',
     opts = {},
   },
+
 }
