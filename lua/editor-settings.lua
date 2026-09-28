@@ -16,6 +16,11 @@ vim.opt.list = true
 vim.opt.listchars:append "eol:↴"
 vim.opt.scrolloff = 5
 
+vim.diagnostic.enable = true
+vim.diagnostic.config({
+  virtual_lines = true,
+})
+
 
 
 -------------------------------------- Editing

@@ -44,3 +44,5 @@ require('lazy').setup('plugins')
 require('keybindings')
 require('editor-settings')
 
+----------------------------------------- setup ruby_lsp
+vim.lsp.enable("ruby_lsp")
